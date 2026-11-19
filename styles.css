@@ -1,22 +1,31 @@
 /* ===== Design tokens ===== */
 :root {
-  --color-primary: #c2410c;
-  --color-primary-dark: #9a3412;
-  --color-accent: #15803d;
-  --color-bg: #fff7ed;
-  --color-surface: #ffffff;
-  --color-text: #1f2937;
-  --color-muted: #6b7280;
-  --color-border: #e5e7eb;
-  --color-danger: #b91c1c;
+  --color-primary: #2ee6a6;
+  --color-primary-dark: #1fc48c;
+  --color-accent: #2ee6a6;
+  --color-bg: #0b0b10;
+  --color-surface: #16161d;
+  --color-surface-2: #22222c;
+  --color-text: #f5f5f7;
+  --color-muted: #a1a1ae;
+  --color-border: #2d2d38;
+  --color-danger: #ff7b7b;
 
-  --radius: 8px;
+  /* Festival touches */
+  --color-violet: #2b1a6b;
+  --color-gold: #fbbf24;
+  --color-rose: #ec4899;
+
+  --radius: 14px;
+  --radius-lg: 22px;
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2rem;
   --max-width: 960px;
   --font-base: "Segoe UI", Roboto, Arial, sans-serif;
+
+  color-scheme: dark;
 }
 
 /* ===== Reset ===== */
@@ -28,6 +37,7 @@
 
 body {
   margin: 0;
+  padding-bottom: 130px; /* space for the fixed checkout bar */
   font-family: var(--font-base);
   line-height: 1.6;
   color: var(--color-text);
@@ -55,26 +65,238 @@ main {
 main section {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: var(--space-3);
   margin-bottom: var(--space-3);
 }
 
+main h2 {
+  margin: 0 0 var(--space-3);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+main h2::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 4px;
+  margin-top: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+}
+
 /* ===== Header ===== */
 .site-header {
-  background: var(--color-primary);
+  background: linear-gradient(180deg, var(--color-violet) 0%, #150e36 60%, var(--color-bg) 100%);
   color: #fff;
-  padding: var(--space-3) 0;
+  padding: var(--space-4) 0 0;
   text-align: center;
 }
 
 .site-header h1 {
   margin: 0;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 .tagline {
   margin: var(--space-1) 0 0;
-  opacity: 0.9;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+/* Banderines de feria */
+.site-header::after {
+  content: "";
+  display: block;
+  height: 24px;
+  margin-top: var(--space-3);
+  background-image:
+    conic-gradient(from -30deg at 16.67% 100%, var(--color-gold) 60deg, transparent 0),
+    conic-gradient(from -30deg at 50% 100%, var(--color-primary) 60deg, transparent 0),
+    conic-gradient(from -30deg at 83.33% 100%, var(--color-rose) 60deg, transparent 0);
+  background-size: 84px 24px;
+  background-repeat: repeat-x;
+}
+
+/* ===== Form ===== */
+#ticket-form {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+input,
+select {
+  width: 100%;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface-2);
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:hover,
+select:hover {
+  border-color: #454554;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(46, 230, 166, 0.2);
+}
+
+small {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.form-error {
+  margin: 0;
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* ===== Checkout bar (fixed at the bottom) ===== */
+.checkout-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.9rem max(var(--space-2), calc((100vw - var(--max-width)) / 2));
+  background: rgba(11, 11, 16, 0.94);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--color-border);
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  line-height: 1.2;
+}
+
+.total output {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+/* ===== Buttons ===== */
+.form-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+button {
+  font: inherit;
+  font-weight: 800;
+  padding: 0.85rem 2rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+}
+
+#buy-button {
+  background: var(--color-primary);
+  color: #04130d;
+  font-size: 1.05rem;
+}
+
+#buy-button:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(46, 230, 166, 0.35);
+}
+
+#clear-button {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+#clear-button:hover {
+  background: var(--color-surface-2);
+  border-color: #454554;
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* ===== Table ===== */
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+}
+
+thead th {
+  background: var(--color-surface-2);
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+tbody tr {
+  border-top: 1px solid var(--color-border);
+}
+
+tbody tr:hover {
+  background: var(--color-surface-2);
+}
+
+th:nth-child(n + 3),
+td:nth-child(n + 3) {
+  text-align: right;
+}
+
+.empty-row td {
+  text-align: center;
+  color: var(--color-muted);
+  font-style: italic;
+  padding: var(--space-3);
 }
 
 /* ===== Accessibility ===== */
@@ -82,8 +304,8 @@ main section {
   position: absolute;
   left: -999px;
   top: 0;
-  background: var(--color-text);
-  color: #fff;
+  background: var(--color-primary);
+  color: #04130d;
   padding: var(--space-1) var(--space-2);
   z-index: 100;
 }
@@ -93,7 +315,7 @@ main section {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -106,9 +328,50 @@ main section {
   white-space: nowrap;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
 /* ===== Responsive ===== */
+@media (min-width: 700px) {
+  #ticket-form {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: var(--space-3);
+  }
+
+  .form-error {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 600px) {
+  body {
+    padding-bottom: 170px;
+  }
+
   main section {
     padding: var(--space-2);
+  }
+
+  .checkout-bar {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .total {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .form-actions {
+    width: 100%;
+  }
+
+  #buy-button {
+    flex: 1;
   }
 }
