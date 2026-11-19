@@ -20,12 +20,72 @@
   <main id="main-content" class="container">
     <section id="ticket-form-section" aria-labelledby="form-title">
       <h2 id="form-title">Comprar boletos</h2>
-      <!-- Frontend (feature/ui): purchase form goes here -->
+
+      <form id="ticket-form" novalidate>
+        <div class="form-group">
+          <label for="full-name">Nombre completo</label>
+          <input type="text" id="full-name" name="fullName" autocomplete="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="visit-date">Fecha de visita</label>
+          <input type="date" id="visit-date" name="visitDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="ticket-type">Tipo de boleto</label>
+          <select id="ticket-type" name="ticketType" required aria-describedby="ticket-type-hint">
+            <option value="">Selecciona una opción</option>
+            <option value="general">General</option>
+            <option value="child">Niño</option>
+            <option value="senior">Adulto mayor</option>
+            <option value="student">Estudiante</option>
+          </select>
+          <small id="ticket-type-hint">Las tarifas de niño, adulto mayor y estudiante se verifican con identificación al ingresar.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="quantity">Cantidad de boletos</label>
+          <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+        </div>
+
+        <p id="form-error" class="form-error" role="alert" aria-live="polite"></p>
+
+       <div class="checkout-bar">
+  <p class="total">Total a pagar <output id="total-price" for="ticket-type quantity">$0.00</output></p>
+  <div class="form-actions">
+    <button type="submit" id="buy-button">Comprar</button>
+    <button type="reset" id="clear-button">Limpiar</button>
+  </div>
+</div>
+      </form>
     </section>
 
     <section id="purchases-section" aria-labelledby="purchases-title">
       <h2 id="purchases-title">Compras registradas</h2>
-      <!-- Frontend (feature/ui): purchases table goes here -->
+      <div class="table-wrapper">
+  <table id="purchases-table">
+    <caption class="visually-hidden">Lista de compras registradas</caption>
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo de boleto</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody id="purchases-table-body">
+      <tr class="empty-row">
+        <td colspan="4">Aún no hay compras registradas.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
     </section>
   </main>
 
