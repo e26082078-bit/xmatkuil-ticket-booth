@@ -1,9 +1,8 @@
 "use strict";
 
 /**
-* Xmatkuil Ticket Booth - application script.
-* Day 5: form validation and price calculation.
-* Day 6: purchase registry in the table.
+ * Xmatkuil Ticket Booth - application script.
+ * Business logic: form validation, price calculation, and purchase registry.
  */
 
 // ===== Business rules =====
@@ -12,6 +11,13 @@ const TICKET_PRICES = {
   child: 20,
   senior: 20,
   student: 30,
+};
+
+const TICKET_LABELS = {
+  general: "General",
+  child: "Niño",
+  senior: "Adulto mayor",
+  student: "Estudiante",
 };
 
 const MIN_QUANTITY = 1;
@@ -39,6 +45,7 @@ const dom = {
   quantity: document.getElementById("quantity"),
   formError: document.getElementById("form-error"),
   totalPrice: document.getElementById("total-price"),
+  purchasesTableBody: document.getElementById("purchases-table-body"),
 };
 
 // ===== Price calculation =====
@@ -108,6 +115,44 @@ function showErrors(errors) {
   dom.formError.textContent = errors.join(" ");
 }
 
+// ===== Purchase registry =====
+function renderPurchases() {
+  if (!dom.purchasesTableBody) return;
+  dom.purchasesTableBody.innerHTML = "";
+
+  if (state.purchases.length === 0) {
+    const emptyRow = document.createElement("tr");
+    emptyRow.className = "empty-row";
+
+    const cell = document.createElement("td");
+    cell.colSpan = 4;
+    cell.textContent = "Aún no hay compras registradas.";
+
+    emptyRow.appendChild(cell);
+    dom.purchasesTableBody.appendChild(emptyRow);
+    return;
+  }
+
+  state.purchases.forEach((item) => {
+    const row = document.createElement("tr");
+
+    const nameTd = document.createElement("td");
+    nameTd.textContent = item.fullName;
+
+    const typeTd = document.createElement("td");
+    typeTd.textContent = TICKET_LABELS[item.ticketType] || item.ticketType;
+
+    const qtyTd = document.createElement("td");
+    qtyTd.textContent = String(item.quantity);
+
+    const totalTd = document.createElement("td");
+    totalTd.textContent = currencyFormatter.format(item.total);
+
+    row.append(nameTd, typeTd, qtyTd, totalTd);
+    dom.purchasesTableBody.appendChild(row);
+  });
+}
+
 // ===== Event handlers =====
 function handleSubmit(event) {
   event.preventDefault();
@@ -119,11 +164,27 @@ function handleSubmit(event) {
     return;
   }
 
-  // TODO (Day 6): register the purchase in the table and reset the form
+  const fullName = dom.fullName.value.trim();
+  const ticketType = dom.ticketType.value;
+  const quantity = Number(dom.quantity.value);
+  const total = calculateTotal(ticketType, quantity);
+
+  state.purchases.push({
+    fullName,
+    email: dom.email.value.trim(),
+    visitDate: dom.visitDate.value,
+    ticketType,
+    quantity,
+    total,
+  });
+
+  renderPurchases();
+  dom.form.reset();
+  dom.quantity.value = String(MIN_QUANTITY);
+  updateTotal();
 }
 
 function handleReset() {
-  // Wait for the browser to reset the fields before updating the total
   setTimeout(() => {
     showErrors([]);
     updateTotal();
@@ -140,6 +201,7 @@ function init() {
   dom.form.addEventListener("submit", handleSubmit);
   dom.form.addEventListener("reset", handleReset);
 
+  renderPurchases();
   updateTotal();
   console.log("Xmatkuil ticket booth loaded");
 }
