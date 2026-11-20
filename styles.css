@@ -1,23 +1,22 @@
-/* ===== Design tokens ===== */
+/* ===== Design tokens (Paleta Festiva Yucateca - Xmatkuil) ===== */
 :root {
-  --color-primary: #2ee6a6;
-  --color-primary-dark: #1fc48c;
-  --color-accent: #2ee6a6;
-  --color-bg: #0b0b10;
-  --color-surface: #16161d;
-  --color-surface-2: #22222c;
-  --color-text: #f5f5f7;
-  --color-muted: #a1a1ae;
-  --color-border: #2d2d38;
-  --color-danger: #ff7b7b;
+  --color-cream: #f4efe1;          /* Fondo crema cálido tipo papel cartel */
+  --color-cream-card: #fffdf8;     /* Superficie clara para tarjetas */
+  --color-cream-soft: #ebe3cf;     /* Campos y cabeceras suaves */
+  --color-ink: #2b1d26;            /* Texto oscuro con alto contraste */
+  --color-muted: #6c5a64;          /* Texto secundario cálido */
+  --color-border: #d8ccb4;         /* Borde sutil tipo cartón/papel */
 
-  /* Festival touches */
-  --color-violet: #2b1a6b;
-  --color-gold: #fbbf24;
-  --color-rose: #ec4899;
+  /* Colores vibrantes de feria */
+  --color-magenta: #c9266d;        /* Bugambilia intenso */
+  --color-magenta-dark: #a31b57;
+  --color-lime: #8cb828;           /* Verde limón / henequén */
+  --color-lime-dark: #73991e;
+  --color-mango: #eab325;          /* Amarillo mango / feria */
+  --color-danger: #c81e45;
 
-  --radius: 14px;
-  --radius-lg: 22px;
+  --radius: 16px;
+  --radius-lg: 24px;
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
@@ -25,7 +24,7 @@
   --max-width: 960px;
   --font-base: "Segoe UI", Roboto, Arial, sans-serif;
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 /* ===== Reset ===== */
@@ -37,11 +36,15 @@
 
 body {
   margin: 0;
-  padding-bottom: 130px; /* space for the fixed checkout bar */
+  padding-bottom: 135px;
   font-family: var(--font-base);
   line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-bg);
+  color: var(--color-ink);
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(circle at 8% 12%, rgba(201, 38, 109, 0.08) 0 90px, transparent 91px),
+    radial-gradient(circle at 92% 18%, rgba(140, 184, 40, 0.1) 0 110px, transparent 111px),
+    radial-gradient(circle at 86% 78%, rgba(234, 179, 37, 0.11) 0 120px, transparent 121px);
 }
 
 img {
@@ -63,62 +66,83 @@ main {
 }
 
 main section {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--color-cream-card);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-3);
   margin-bottom: var(--space-3);
+  box-shadow: 0 8px 0 rgba(43, 29, 38, 0.06);
 }
 
 main h2 {
   margin: 0 0 var(--space-3);
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--color-text);
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: var(--color-magenta);
+  letter-spacing: -0.01em;
 }
 
+/* Barra tricolor tipo cartel festivo */
 main h2::after {
   content: "";
   display: block;
-  width: 48px;
-  height: 4px;
-  margin-top: 0.5rem;
+  width: 84px;
+  height: 7px;
+  margin-top: 0.45rem;
   border-radius: 999px;
-  background: var(--color-primary);
+  background: linear-gradient(
+    90deg,
+    var(--color-magenta) 0 33.3%,
+    var(--color-mango) 33.3% 66.6%,
+    var(--color-lime) 66.6% 100%
+  );
 }
 
 /* ===== Header ===== */
 .site-header {
-  background: linear-gradient(180deg, var(--color-violet) 0%, #150e36 60%, var(--color-bg) 100%);
-  color: #fff;
+  background:
+    radial-gradient(circle at 50% -20%, rgba(234, 179, 37, 0.28), transparent 60%),
+    linear-gradient(180deg, #efe6cf 0%, var(--color-cream) 100%);
+  color: var(--color-ink);
   padding: var(--space-4) 0 0;
   text-align: center;
+  border-bottom: 2px solid var(--color-border);
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: clamp(2rem, 6vw, 3.2rem);
-  font-weight: 800;
+  font-size: clamp(2.2rem, 6.5vw, 3.5rem);
+  font-weight: 900;
   letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-magenta);
+  text-shadow: 3px 3px 0 var(--color-mango);
 }
 
 .tagline {
-  margin: var(--space-1) 0 0;
-  font-size: 1.1rem;
-  color: var(--color-muted);
+  display: inline-block;
+  margin: var(--space-1) auto 0;
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  background: var(--color-lime);
+  color: #1f2b07;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
-/* Banderines de feria */
+/* Cenefa estilo carpa de feria + puntos decorativos */
 .site-header::after {
   content: "";
   display: block;
-  height: 24px;
+  height: 28px;
   margin-top: var(--space-3);
   background-image:
-    conic-gradient(from -30deg at 16.67% 100%, var(--color-gold) 60deg, transparent 0),
-    conic-gradient(from -30deg at 50% 100%, var(--color-primary) 60deg, transparent 0),
-    conic-gradient(from -30deg at 83.33% 100%, var(--color-rose) 60deg, transparent 0);
-  background-size: 84px 24px;
+    conic-gradient(from -30deg at 16.67% 72%, var(--color-magenta) 60deg, transparent 0),
+    conic-gradient(from -30deg at 50% 72%, var(--color-mango) 60deg, transparent 0),
+    conic-gradient(from -30deg at 83.33% 72%, var(--color-lime) 60deg, transparent 0),
+    radial-gradient(circle, var(--color-magenta) 3px, transparent 3.5px);
+  background-size: 84px 20px, 84px 20px, 84px 20px, 28px 8px;
+  background-position: 0 0, 0 0, 0 0, 0 20px;
   background-repeat: repeat-x;
 }
 
@@ -136,33 +160,36 @@ main h2::after {
 
 label {
   font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 800;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: var(--color-ink);
 }
 
 input,
 select {
   width: 100%;
   font: inherit;
-  color: var(--color-text);
-  background: var(--color-surface-2);
+  color: var(--color-ink);
+  background: var(--color-cream-soft);
   padding: 0.8rem 1rem;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 input:hover,
 select:hover {
-  border-color: #454554;
+  border-color: var(--color-lime-dark);
+  background: #fff;
 }
 
 input:focus,
 select:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(46, 230, 166, 0.2);
+  outline: none;
+  background: #fff;
+  border-color: var(--color-magenta);
+  box-shadow: 0 0 0 3px rgba(201, 38, 109, 0.18);
 }
 
 small {
@@ -173,7 +200,7 @@ small {
 .form-error {
   margin: 0;
   color: var(--color-danger);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* ===== Checkout bar (fixed at the bottom) ===== */
@@ -188,9 +215,10 @@ small {
   align-items: center;
   gap: var(--space-2);
   padding: 0.9rem max(var(--space-2), calc((100vw - var(--max-width)) / 2));
-  background: rgba(11, 11, 16, 0.94);
+  background: rgba(255, 253, 248, 0.96);
   backdrop-filter: blur(8px);
-  border-top: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-mango);
+  box-shadow: 0 -6px 20px rgba(43, 29, 38, 0.08);
 }
 
 .total {
@@ -198,15 +226,15 @@ small {
   flex-direction: column;
   margin: 0;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-muted);
   line-height: 1.2;
 }
 
 .total output {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--color-text);
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: var(--color-magenta);
 }
 
 /* ===== Buttons ===== */
@@ -226,26 +254,28 @@ button {
 }
 
 #buy-button {
-  background: var(--color-primary);
-  color: #04130d;
+  background: var(--color-magenta);
+  color: #fff;
   font-size: 1.05rem;
+  box-shadow: 0 4px 0 var(--color-magenta-dark);
 }
 
 #buy-button:hover {
-  background: var(--color-primary-dark);
+  background: var(--color-magenta-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(46, 230, 166, 0.35);
+  box-shadow: 0 6px 0 #7c1240;
 }
 
 #clear-button {
-  background: transparent;
-  color: var(--color-text);
+  background: var(--color-cream-soft);
+  color: var(--color-ink);
   border-color: var(--color-border);
 }
 
 #clear-button:hover {
-  background: var(--color-surface-2);
-  border-color: #454554;
+  background: var(--color-mango);
+  border-color: var(--color-mango);
+  color: var(--color-ink);
 }
 
 button:active {
@@ -255,8 +285,9 @@ button:active {
 /* ===== Table ===== */
 .table-wrapper {
   overflow-x: auto;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius);
+  background: #fff;
 }
 
 table {
@@ -272,11 +303,13 @@ td {
 }
 
 thead th {
-  background: var(--color-surface-2);
-  color: var(--color-muted);
+  background: var(--color-cream-soft);
+  color: var(--color-ink);
   font-size: 0.8rem;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  border-bottom: 2px solid var(--color-border);
 }
 
 tbody tr {
@@ -284,7 +317,7 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: var(--color-surface-2);
+  background: rgba(140, 184, 40, 0.12);
 }
 
 th:nth-child(n + 3),
@@ -304,8 +337,8 @@ td:nth-child(n + 3) {
   position: absolute;
   left: -999px;
   top: 0;
-  background: var(--color-primary);
-  color: #04130d;
+  background: var(--color-magenta);
+  color: #fff;
   padding: var(--space-1) var(--space-2);
   z-index: 100;
 }
@@ -315,7 +348,7 @@ td:nth-child(n + 3) {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-magenta);
   outline-offset: 2px;
 }
 
