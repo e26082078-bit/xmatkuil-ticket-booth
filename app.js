@@ -198,6 +198,15 @@ function handleSubmit(event) {
     total,
   });
 
+  // Send purchase confirmation for analytics and support follow-up
+  fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: fullName,
+      email: dom.email.value.trim(),
+    }),
+  }).catch(() => { });
   renderPurchases();
   dom.form.reset();
   dom.quantity.value = String(MIN_QUANTITY);
